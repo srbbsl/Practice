@@ -16,6 +16,9 @@ export const App = () => {
                     index: true, //index route parent component render huda sangai auxa
                     element: <Home />
                 },
+
+                
+                
             ]
         }
     ]);

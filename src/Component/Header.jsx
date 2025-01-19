@@ -8,7 +8,7 @@ export const Header = () => {
                 <h1 className="text-2xl font-semibold">Test</h1>
                 <nav className="space-x-5">
                     <NavLink to={'/about'}>About</NavLink>
-                    <NavLink>Form</NavLink>
+                    <NavLink to={'/add-form'}>Form</NavLink>
                     <NavLink>Contact</NavLink>
                 </nav>
             </header>

@@ -35,10 +35,10 @@ const AddForm = () => {
           country: ''
         }}
 
-        onSubmit={(val) => {
+        onSubmit={(val) => {  
           toast.success('successfully added');
           dispatch(addBlog({ ...val, id: nanoid() }));
-          nav(-1);
+          nav(-1); //back to home page
         }}
 
         validationSchema={valSchema}

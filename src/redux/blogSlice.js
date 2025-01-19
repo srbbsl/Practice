@@ -4,9 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const blogSlice = createSlice({
     name: 'blogSlice',
+    
     initialState: {
-        blogs: []
+        blogs: [],
     },
+    
     reducers: {
         addBlog: (state, aciton) => {
             state.blogs.push(aciton.payload);

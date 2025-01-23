@@ -14,4 +14,4 @@ export const blogSlice = createSlice({
     }
 });
 
-export const {addBlog} = blogSlice.actions;
+export const { addBlog } = blogSlice.actions;

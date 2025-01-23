@@ -1,6 +1,11 @@
 import { Button, Checkbox, Input, Option, Radio, Select, Textarea, Typography } from "@material-tailwind/react";
 import { Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import * as Yup from 'yup';
+import { addBlog } from "../redux/blogSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 
 const valSchema = Yup.object({
@@ -12,6 +17,10 @@ const valSchema = Yup.object({
 })
 
 export const AddForm = () => {
+
+    const dispatch = useDispatch();
+    const nav = useNavigate();
+
     return (
       <div className="max-w-[400px] p-5">
 
@@ -25,7 +34,10 @@ export const AddForm = () => {
           }}
 
           onSubmit={(val) => {
-            console.log(val)
+            console.log(val);
+            toast.success('Successfully Added');
+            dispatch(addBlog({ ...val, id: nanoid() }));
+            nav(-1);
           }}
 
           validationSchema={valSchema}

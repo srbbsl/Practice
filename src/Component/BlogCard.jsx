@@ -6,9 +6,11 @@ import {
     CardFooter,
     Typography,
     Button,
+    IconButton,
   } from "@material-tailwind/react";
+import { RemoveDialog } from "./RemoveDialog";
    
-  export function BlogCard({ blog: { title, detail } }) {
+  export function BlogCard({ blog: { title, detail }, index }) {
     return (
       <Card className="">
         <CardBody>
@@ -20,7 +22,7 @@ import {
             {detail}
           </Typography>
         </CardBody>
-        <CardFooter className="pt-0">
+        <CardFooter className="pt-0 space-y-3">
           <a href="#" className="inline-block">
             <Button size="sm" variant="text" className="flex items-center gap-2">
               Learn More
@@ -40,6 +42,11 @@ import {
               </svg>
             </Button>
           </a>
+          <div className="space-x-4 flex justify-end">
+                
+                <RemoveDialog index={index}/>
+          </div>
+          
         </CardFooter>
       </Card>
     );

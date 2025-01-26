@@ -12,7 +12,7 @@ export const Home = () => {
             {blogs.length === 0 && <h1 className="font-bold">No Blog Found</h1>}
             {
                 blogs.map((blog, i) => {
-                    return  <BlogCard blog={blog} key={blog.id} index={i}/>
+                    return  <BlogCard blog={blog} key={blog.id} index={i} />
             })}
         </div>
     )

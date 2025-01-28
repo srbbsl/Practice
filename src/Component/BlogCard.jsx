@@ -2,9 +2,11 @@ import {
     Card,
     CardBody,
     CardFooter,
+    IconButton,
     Typography,
    
   } from "@material-tailwind/react";
+import { RemoveDialog } from "./RemoveDialog";
    
   export function BlogCard({ blog: {title, detail} }) {
     return (
@@ -18,8 +20,12 @@ import {
             {detail}
           </Typography>
         </CardBody>
-        <CardFooter className="pt-0">
+        <CardFooter className="pt-0 flex justify-end gap-2">
+          <IconButton size="sm" color="purple">
+            <i className="fas fa-edit" />
+          </IconButton>
           
+          <RemoveDialog />
         </CardFooter>
       </Card>
     );

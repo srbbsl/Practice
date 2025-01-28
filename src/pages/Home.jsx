@@ -9,6 +9,7 @@ const Home = () => {
 
   return (
     <div className='p-4 grid grid-cols-4 gap-3'>
+      {blogs.length === 0 && <h1>No Blog Found</h1>}
       {
         blogs.map((blog) => {
             return <BlogCard blog={blog} key={blog.id}/>

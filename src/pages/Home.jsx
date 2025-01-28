@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { BlogCard } from '../component/BlogCard';
 
 const Home = () => {
 
@@ -7,7 +8,14 @@ const Home = () => {
   console.log(blogs);
 
   return (
-    <div>Home</div>
+    <div className='p-4 grid grid-cols-4 gap-3'>
+      {
+        blogs.map((blog) => {
+            return <BlogCard blog={blog} key={blog.id}/>
+             
+        })
+      }
+    </div>
   )
 }
 

@@ -1,12 +1,11 @@
-import { createBrowserRouter } from "react-router"
-import { RouterProvider } from "react-router-dom";
-import { RootLayout } from "./Component/RootLayout";
-import { Home } from "./pages/Home";
-import { About } from "./pages/About";
-import { CategoryItems } from "./pages/CategoryItems";
-import { ItemDetail } from "./pages/ItemDetail";
-import { FormHandle } from "./pages/FormHandle";
-// import { ListWithAvatar } from "./Component/ListWithAvatar";
+
+
+
+import { createBrowserRouter, RouterProvider } from "react-router"
+import { RootLayout } from "./component/RootLayout"
+import { Home } from "./pages/Home"
+import { AddForm } from "./pages/AddForm";
+import { EditForm } from "./pages/EditForm";
 
 
 
@@ -24,10 +23,15 @@ export const App = () => {
                     index: true, //index route parent component render huda sangai auxa
                     element: <Home />
                 },
-
+                
                 {
                     path: 'add-form',
-                    element: <AddForm/>
+                    element: <AddForm />
+                },
+            
+                {
+                    path: 'edit-form/:id',
+                    element: <EditForm />
                 },
 
                 

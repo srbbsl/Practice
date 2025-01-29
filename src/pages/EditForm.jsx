@@ -1,15 +1,11 @@
 import { Button, Checkbox, Input, Option, Radio, Select, Textarea, Typography } from "@material-tailwind/react";
 import { Formik } from "formik";
-<<<<<<< HEAD
-import * as Yup from 'yup';
-=======
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import * as Yup from 'yup';
 import { addBlog } from "../redux/blogSlice";
 import { nanoid } from "@reduxjs/toolkit";
->>>>>>> redux
 
 
 const valSchema = Yup.object({
@@ -20,14 +16,11 @@ const valSchema = Yup.object({
   // country: '',
 })
 
-export const AddForm = () => {
-<<<<<<< HEAD
-=======
-
+export const EditForm = () => {
+    const { id } = useParams();
     const dispatch = useDispatch();
     const nav = useNavigate();
 
->>>>>>> redux
     return (
       <div className="max-w-[400px] p-5">
 
@@ -41,14 +34,10 @@ export const AddForm = () => {
           }}
 
           onSubmit={(val) => {
-<<<<<<< HEAD
-            console.log(val)
-=======
             // console.log(val);
             toast.success('Successfully Added');
             dispatch(addBlog({ ...val, id: nanoid() }));
             nav(-1);
->>>>>>> redux
           }}
 
           validationSchema={valSchema}

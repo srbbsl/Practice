@@ -13,7 +13,11 @@ export const blogSlice = createSlice({
             state.blogs.push(action.payload);
             setToLocal(state.blogs);
         },
+        removeblog: (state, action) => {
+            state.blogs.splice(action.payload, 1);
+            setToLocal(state.blogs);
+        },
     }
 });
 
-export const { addblog } = blogSlice.actions;
+export const { addblog, removeblog } = blogSlice.actions;

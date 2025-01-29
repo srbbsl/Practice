@@ -8,7 +8,7 @@ import {
   } from "@material-tailwind/react";
 import { RemoveDialog } from "./RemoveDialog";
    
-  export function BlogCard({ blog: {title, detail} }) {
+  export function BlogCard({ blog: {title, detail}, index }) {
     return (
       <Card>
         <CardBody>
@@ -25,7 +25,7 @@ import { RemoveDialog } from "./RemoveDialog";
             <i className="fas fa-edit" />
           </IconButton>
           
-          <RemoveDialog />
+          <RemoveDialog index={index}/>
         </CardFooter>
       </Card>
     );

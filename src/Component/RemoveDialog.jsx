@@ -7,11 +7,15 @@ import {
   DialogFooter,
   IconButton,
 } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
+import { removeblog } from "../redux/blogSlice";
  
-export function RemoveDialog() {
+export function RemoveDialog({ index }) {
   const [open, setOpen] = useState(false);
  
   const handleOpen = () => setOpen(!open);
+
+  const dispatch = useDispatch();
  
   return (
     <>
@@ -32,7 +36,10 @@ export function RemoveDialog() {
             >
                 <span>Cancel</span>
             </Button>
-            <Button variant="gradient" color="green" onClick={handleOpen}>
+            <Button variant="gradient" color="green" onClick={() => {
+                dispatch(removeblog(index));
+                handleOpen();
+            }}>
                 <span>Confirm</span>
             </Button>
             </DialogFooter>

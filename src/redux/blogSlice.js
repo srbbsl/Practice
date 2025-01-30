@@ -4,25 +4,21 @@ import { getFromLocal, setToLocal } from "../app/localStorage";
 
 
 export const blogSlice = createSlice({
-    name: 'blogslice',
+    name: 'blogSlice',
     initialState: {
         blogs: getFromLocal(),
     },
     reducers: {
-        addBlog: (state, action) => {
+        addblog: (state, action) => {
             state.blogs.push(action.payload);
-            setToLocal(state.blogs)
-        },
-
-        removeBlog: (state, action) => {
-            state.blogs.splice(action.payload, 1);
-            setToLocal(state.blogs)
-        },
-        editBlog: (state, action) => {
-            state.blogs = state.blogs.map((blog) => blog.id === action.payload.id ? action.payload : blog);
             setToLocal(state.blogs);
         },
+        removeblog: (state, action) => {
+            state.blogs.splice(action.payload, 1);
+            setToLocal(state.blogs);
+        },
+
     }
 });
 
-export const { addBlog, removeBlog, editBlog } = blogSlice.actions;
+export const { addblog, removeblog } = blogSlice.actions;

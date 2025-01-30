@@ -1,33 +1,26 @@
 import { Button, Checkbox, Input, Option, Radio, Select, Textarea, Typography } from "@material-tailwind/react";
+import { nanoid } from "@reduxjs/toolkit";
 import { Formik } from "formik";
-<<<<<<< HEAD
-import * as Yup from 'yup';
-=======
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import * as Yup from 'yup';
-import { addBlog } from "../redux/blogSlice";
-import { nanoid } from "@reduxjs/toolkit";
->>>>>>> redux
+import { addblog } from "../redux/blogSlice";
 
 
 const valSchema = Yup.object({
   title: Yup.string().required('Please provide the title field'), //.min(5).max(200)
   detail: Yup.string().min(5).max(200).required(),
-  // location: '',
+  location: Yup.string().required(),
   genres: Yup.array().length(1).required(),
-  // country: '',
-})
+  country: Yup.string().required(),
+});
 
 export const AddForm = () => {
-<<<<<<< HEAD
-=======
 
     const dispatch = useDispatch();
     const nav = useNavigate();
 
->>>>>>> redux
     return (
       <div className="max-w-[400px] p-5">
 
@@ -41,14 +34,9 @@ export const AddForm = () => {
           }}
 
           onSubmit={(val) => {
-<<<<<<< HEAD
-            console.log(val)
-=======
-            // console.log(val);
             toast.success('Successfully Added');
-            dispatch(addBlog({ ...val, id: nanoid() }));
+            dispatch(addblog({ ...val, id: nanoid() }));
             nav(-1);
->>>>>>> redux
           }}
 
           validationSchema={valSchema}

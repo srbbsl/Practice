@@ -17,7 +17,11 @@ export const blogSlice = createSlice({
             state.blogs.splice(action.payload, 1);
             setToLocal(state.blogs);
         },
+        editBlog: (state, action) => {
+            state.blogs = state.blogs.map((blog) => blog.id === action.payload.id ? action.payload : blog);
+            setToLocal(state.blogs);
+        }
     }
 });
 
-export const { addblog, removeblog } = blogSlice.actions;
+export const { addblog, removeblog, editBlog } = blogSlice.actions;

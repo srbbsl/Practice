@@ -1,11 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
-import { RootLayout } from "./component/RootLayout"
-import Home from "./pages/Home";
-import { AddForm } from "./component/AddForm";
-
-
-
-
+import { Rootlayout } from "./ui/RootLayout";
 
 
 
@@ -14,16 +8,10 @@ export const App = () => {
     const router = createBrowserRouter([
         {
             path: '/',
-            element: <RootLayout />,
+            element: <Rootlayout />,
             children: [
-                {
-                    index: true, //index route parent component render huda sangai auxa
-                    element: <Home />
-                },    
-                {
-                    path: 'add-form',
-                    element: <AddForm />
-                }
+                
+            
             ]
         }
     ]);

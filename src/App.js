@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
 import { Rootlayout } from "./ui/RootLayout";
+import { Login } from "./features/auth/Login";
 
 
 
@@ -10,7 +11,10 @@ export const App = () => {
             path: '/',
             element: <Rootlayout />,
             children: [
-                
+                {
+                    index: true,
+                    element: <Login />
+                }
             
             ]
         }

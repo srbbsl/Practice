@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
 import { Rootlayout } from "./ui/RootLayout";
 import { Login } from "./features/auth/Login";
+import { ProductList } from "./features/product/ProductList";
 
 
 
@@ -13,6 +14,10 @@ export const App = () => {
             children: [
                 {
                     index: true,
+                    element: <ProductList />
+                },
+                {
+                    path: 'login',
                     element: <Login />
                 }
             

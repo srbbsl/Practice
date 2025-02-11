@@ -35,7 +35,8 @@ export const Login = () => {
                         const response = await loginUser(val).unwrap();
                         // console.log(response);
                         dispatch(addUser(response.data));
-                        toast.success('successfully login')
+                        toast.success('successfully login');
+                        nav(-1);
                     } catch (err) {
                         // console.log(err);
                         toast.error(err.data?.message || err.data);

@@ -18,6 +18,9 @@ import {
   PowerIcon,
 
 } from "@heroicons/react/24/solid";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { removeUser } from "../features/auth/userSlice";
  
 // profile menu component
 const profileMenuItems = [
@@ -47,6 +50,8 @@ function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
  
   const closeMenu = () => setIsMenuOpen(false);
+
+  const dispatch = useDispatch();
  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -77,7 +82,12 @@ function ProfileMenu() {
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={() => {
+                if (label === "Sign Out") {
+                  dispatch(removeUser());
+                }
+                closeMenu();
+              }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -106,6 +116,9 @@ function ProfileMenu() {
  
  
 export function Header() {
+
+  const nav = useNavigate();
+  const { user } = useSelector((state) => state.userSlice);
  
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
@@ -117,11 +130,12 @@ export function Header() {
         >
           User 
         </Typography>
-           
-        <Button size="sm" variant="text">
+
+        {user ? <ProfileMenu />:   
+        <Button onClick={() => nav('/login')} size="sm" variant="text">
           <span>Log In</span>
-        </Button>
-        <ProfileMenu />
+        </Button>}
+        
       </div>
      
     </Navbar>

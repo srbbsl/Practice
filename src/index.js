@@ -20,7 +20,7 @@ root.render(
          <ToastContainer 
             position='top-center'
             pauseOnHover={false}
-            autoClose={500}
+            autoClose={3000}
          />
    </Provider>     
 

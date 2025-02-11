@@ -18,6 +18,7 @@ import {
   PowerIcon,
 
 } from "@heroicons/react/24/solid";
+import { useSelector } from "react-redux";
  
 // profile menu component
 const profileMenuItems = [
@@ -106,6 +107,8 @@ function ProfileMenu() {
  
  
 export function Header() {
+
+  const { user } = useSelector((state) => state.userSlice);
  
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">

@@ -14,7 +14,6 @@ import {
   ChevronDownIcon,
   Cog6ToothIcon,
   InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
 
 } from "@heroicons/react/24/solid";
@@ -29,16 +28,23 @@ const profileMenuItems = [
     icon: UserCircleIcon,
   },
   {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
+    label: "Carts",
     icon: InboxArrowDownIcon,
   },
   {
-    label: "Help",
-    icon: LifebuoyIcon,
+    label: "Sign Out",
+    icon: PowerIcon,
+  },
+];
+
+const adminMenu = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+  },
+  {
+    label: "Products",
+    icon: Cog6ToothIcon,
   },
   {
     label: "Sign Out",
@@ -46,12 +52,13 @@ const profileMenuItems = [
   },
 ];
  
-function ProfileMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
- 
-  const closeMenu = () => setIsMenuOpen(false);
+function ProfileMenu({ user }) {
 
+  const menuItems = user?.role === "admin" ? adminMenu : profileMenuItems;
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const closeMenu = () => setIsMenuOpen(false);
   const dispatch = useDispatch();
+  const nav = useNavigate();
  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -77,7 +84,7 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {menuItems.map(({ label, icon }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
@@ -85,6 +92,8 @@ function ProfileMenu() {
               onClick={() => {
                 if (label === "Sign Out") {
                   dispatch(removeUser());
+                } else if (label === "Products") {
+                  nav("/admin-products");
                 }
                 closeMenu();
               }}
@@ -131,7 +140,7 @@ export function Header() {
           User 
         </Typography>
 
-        {user ? <ProfileMenu />:   
+        {user ? <ProfileMenu user={ user } />:   
         <Button onClick={() => nav('/login')} size="sm" variant="text">
           <span>Log In</span>
         </Button>}

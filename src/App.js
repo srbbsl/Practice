@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router"
 import { Rootlayout } from "./ui/RootLayout";
 import { Login } from "./features/auth/Login";
 import { ProductList } from "./features/product/ProductList";
+import { AllProduct } from "./features/admin/AllProduct";
 
 
 
@@ -17,9 +18,13 @@ export const App = () => {
                     element: <ProductList />
                 },
                 {
+                    path: 'admin-products',
+                    element: <AllProduct />
+                },
+                {
                     path: 'login',
                     element: <Login />
-                }
+                },
             
             ]
         }

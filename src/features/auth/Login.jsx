@@ -29,6 +29,10 @@ export const Login = () => {
                             name='email'
                         />
                             {errors.email && touched.email && <p className='text-red-500 text-sm'>{errors.email} </p>}
+
+                        <Button size='sm' className='!absolute'>
+                            Invite
+                        </Button>
                     </div>
 
                     <div>

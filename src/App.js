@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router'
 import { Login } from './features/auth/Login'
 import { RouterProvider } from 'react-router-dom'
 import { RootLayout } from './ui/RootLayout'
+import { Register } from './features/auth/Register'
 
 export const App = () => {
 
@@ -14,7 +15,11 @@ export const App = () => {
                 {
                     index: true,
                     element: <Login />
-                }
+                },
+                {
+                    path: 'register',
+                    element: <Register />
+                },
             ]
         }
     ])

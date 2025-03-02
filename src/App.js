@@ -1,7 +1,8 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
-import { RootLayout } from './ui/RootLayout'
-import { Login } from './auth/Login'
+import { RootLayout } from './features/ui/RootLayout'
+import { Login } from './features/auth/Login'
+import { Register } from './features/auth/Register'
 
 export const App = () => {
 
@@ -13,7 +14,11 @@ export const App = () => {
                 {
                     index: true,
                     element: <Login />
-                }
+                },
+                {
+                    path: 'register',
+                    element: <Register />
+                },
             ]
         }
     ])

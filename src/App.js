@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import { RootLayout } from './features/ui/RootLayout'
 import { Login } from './features/auth/Login'
 import { Register } from './features/auth/Register'
+import { ProductList } from './features/product/ProductList'
 
 export const App = () => {
 
@@ -13,6 +14,10 @@ export const App = () => {
             children: [
                 {
                     index: true,
+                    element: <ProductList />
+                },
+                {
+                    path: 'login',
                     element: <Login />
                 },
                 {

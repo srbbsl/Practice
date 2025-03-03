@@ -28,6 +28,7 @@ export const Login = () => {
                             // console.log(response);
                             dispatch(setUserToLocal(response.data));
                             toast.success('Login successfully');
+                            nav(-1);
                         } catch (err) {
                             console.log(err)
                             toast.error(err.data?.message);

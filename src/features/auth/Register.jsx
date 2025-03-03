@@ -3,8 +3,11 @@ import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { registerSchema } from '../utils/validator'
 import { useNavigate } from 'react-router'
+import { useRegisterUserMutation } from './authApi'
+import { toast } from 'react-toastify'
 
 export const Register = () => {
+    const[registerUser, {isLoading}] = useRegisterUserMutation();
     const [pass, setPass] = useState(false);
     const nav = useNavigate();
 
@@ -17,7 +20,17 @@ export const Register = () => {
                         email: '',
                         password: '',
                     }}
-                    onSubmit={(val) => {}}
+                    onSubmit={async (val) => {
+                        try {
+                            await registerUser(val).unwrap();
+                            // console.log(response);
+                            toast.success('Register successfully');
+                            nav(-1);
+                            } catch (err) {
+                                // console.log(err)
+                                toast.error(err.data?.message);
+                            }
+                    }}
                     validationSchema={registerSchema}
                 >
                     {({ handleChange, handleSubmit, values, errors, touched }) => (
@@ -82,8 +95,13 @@ export const Register = () => {
                             </div>
 
                             {/* Submit Button */}
-                            <Button type="submit" size="sm" fullWidth className="py-2">
-                                Submit
+                            <Button 
+                                loading={isLoading}
+                                type="submit" 
+                                size="sm" 
+                                fullWidth 
+                                className="py-2">
+                                    Submit
                             </Button>
                         </form>
                     )}

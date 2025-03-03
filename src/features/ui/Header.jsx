@@ -13,27 +13,39 @@ import {
 import {
   UserCircleIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
   PowerIcon,
+  ShoppingCartIcon,
+  ListBulletIcon,
 
 } from "@heroicons/react/24/solid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { removeUserFromLocal } from "../auth/userSlice";
  
-// profile menu component
-const profileMenuItems = [
+
+const userMenuItems = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
   },
   {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
+    label: "Carts",
+    icon: ShoppingCartIcon,
   },
   {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
+    label: "Sign Out",
+    icon: PowerIcon,
+  },
+];
+
+const adminMenuItems = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+  },
+  {
+    label: "Products",
+    icon: ListBulletIcon,
   },
   {
     label: "Sign Out",
@@ -41,9 +53,10 @@ const profileMenuItems = [
   },
 ];
  
-function ProfileMenu() {
+function ProfileMenu({user}) {
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
- 
+  const menuItems = user.role === 'admin' ? adminMenuItems : userMenuItems;
   const closeMenu = () => setIsMenuOpen(false);
  
   return (
@@ -70,12 +83,19 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
+        {menuItems.map(({ label, icon }, key) => {
+          const isLastItem = key === menuItems.length - 1;
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={() => {
+                switch (label) {
+                  case 'Sign Out':
+                    dispatch(removeUserFromLocal());
+                    break;
+                }
+                closeMenu();
+              }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -110,22 +130,22 @@ export function Header() {
   // console.log(user)
   const nav = useNavigate();
   return (
-    <Navbar className="bg-black p-2 flex items-center justify-between text-blue-gray-900 !rounded-none">
+    <Navbar className=" p-2 flex items-center justify-between text-blue-gray-900 !rounded-none">
       
         <Typography
           as="a"
           href="#"
-          className=" cursor-pointer py-1.5 font-bold text-lg text-white mx-10"
+          className=" cursor-pointer py-1.5 font-bold text-lg mx-10"
         >
           Shopify
         </Typography>
    
  
-        {user ? <ProfileMenu /> : <Button
-                                    onClick={() => nav('/login')} 
-                                    size="sm"  
-                                    variant="text">
-                                      <span className="text-white">Log In</span>
+        {user ? <ProfileMenu user={user}/> : <Button
+          onClick={() => nav('/login')} 
+          size="sm"  
+          variant="text">
+            <span>Log In</span>
         </Button>
         }
         

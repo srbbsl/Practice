@@ -1,9 +1,136 @@
-import React from 'react'
+import React from "react";
+import {
+  Navbar,
+  Typography,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Avatar,
 
-export const Header = () => {
+} from "@material-tailwind/react";
+import {
+  UserCircleIcon,
+  ChevronDownIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  PowerIcon,
+
+} from "@heroicons/react/24/solid";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+ 
+// profile menu component
+const profileMenuItems = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+  },
+  {
+    label: "Edit Profile",
+    icon: Cog6ToothIcon,
+  },
+  {
+    label: "Inbox",
+    icon: InboxArrowDownIcon,
+  },
+  {
+    label: "Sign Out",
+    icon: PowerIcon,
+  },
+];
+ 
+function ProfileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+ 
+  const closeMenu = () => setIsMenuOpen(false);
+ 
   return (
-    <div className='bg-black p-4'>
-        <h1 className='text-white text-xl font-bold px-10'>Shopify</h1>
-    </div>
-  )
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+        >
+          <Avatar
+            variant="circular"
+            size="sm"
+            alt="tania andrew"
+            className="border border-gray-900 p-0.5"
+            src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          />
+          <ChevronDownIcon
+            strokeWidth={2.5}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
+          />
+        </Button>
+      </MenuHandler>
+      <MenuList className="p-1">
+        {profileMenuItems.map(({ label, icon }, key) => {
+          const isLastItem = key === profileMenuItems.length - 1;
+          return (
+            <MenuItem
+              key={label}
+              onClick={closeMenu}
+              className={`flex items-center gap-2 rounded ${
+                isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+              }`}
+            >
+              {React.createElement(icon, {
+                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                strokeWidth: 2,
+              })}
+              <Typography
+                as="span"
+                variant="small"
+                className="font-normal"
+                color={isLastItem ? "red" : "inherit"}
+              >
+                {label}
+              </Typography>
+            </MenuItem>
+          );
+        })}
+      </MenuList>
+    </Menu>
+  );
+}
+ 
+
+  
+export function Header() {
+
+  const {user} = useSelector((state) => state.userSlice)
+  // console.log(user)
+  const nav = useNavigate();
+  return (
+    <Navbar className="bg-black p-2 flex items-center justify-between text-blue-gray-900 !rounded-none">
+      
+        <Typography
+          as="a"
+          href="#"
+          className=" cursor-pointer py-1.5 font-bold text-lg text-white mx-10"
+        >
+          Shopify
+        </Typography>
+   
+ 
+        {user ? <ProfileMenu /> : <Button
+                                    onClick={() => nav('/login')} 
+                                    size="sm"  
+                                    variant="text">
+                                      <span className="text-white">Log In</span>
+        </Button>
+        }
+        
+   
+    
+    </Navbar>
+  );
 }

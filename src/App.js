@@ -4,6 +4,7 @@ import { RootLayout } from './features/ui/RootLayout'
 import { Login } from './features/auth/Login'
 import { Register } from './features/auth/Register'
 import { ProductList } from './features/product/ProductList'
+import { AdminProduct } from './features/admin/AdminProduct'
 
 export const App = () => {
 
@@ -23,6 +24,10 @@ export const App = () => {
                 {
                     path: 'register',
                     element: <Register />
+                },
+                {
+                    path: 'admin-product',
+                    element: <AdminProduct />
                 },
             ]
         }

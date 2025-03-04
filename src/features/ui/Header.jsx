@@ -44,7 +44,7 @@ const adminMenuItems = [
     icon: UserCircleIcon,
   },
   {
-    label: "Products",
+    label: "Product",
     icon: ListBulletIcon,
   },
   {
@@ -54,6 +54,7 @@ const adminMenuItems = [
 ];
  
 function ProfileMenu({user}) {
+  const nav = useNavigate();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = user.role === 'admin' ? adminMenuItems : userMenuItems;
@@ -92,6 +93,9 @@ function ProfileMenu({user}) {
                 switch (label) {
                   case 'Sign Out':
                     dispatch(removeUserFromLocal());
+                    break;
+                  case 'Product':
+                    nav('/admin-product');
                     break;
                 }
                 closeMenu();

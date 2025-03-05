@@ -19,9 +19,11 @@ export const AddProduct = () => {
                         description: '',
                         price: '',
                         category: '',
+                        image: null,
+                        imageReview: '',
                     }}
                     onSubmit={ async (val) => {
-                        
+                        console.log(val);
                         
                     }}
                     validationSchema={productSchema}
@@ -87,6 +89,24 @@ export const AddProduct = () => {
                                 </Select>
                                 {errors.category && touched.category && (
                                     <p className="text-red-600 text-sm mt-1">{errors.category}</p>
+                                )}
+                            </div>
+
+                            <div>
+                                <Input
+                                    label="Select an image"
+                                    type="file"
+                                    name="image"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        // console.log(file)
+                                        setFieldValue('image', file);
+                                        setFieldValue('imageReview', URL.createObjectURL(file));
+                                    }}
+                                />
+                                {!errors.image && values.imageReview && <img src={values.imageReview} alt='img' />}
+                                {errors.image && touched.image && (
+                                    <p className="text-red-600 text-sm mt-1">{errors.image}</p>
                                 )}
                             </div>
 

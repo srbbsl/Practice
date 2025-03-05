@@ -17,5 +17,5 @@ export const productSchema = () => Yup.object({
     title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
     price: Yup.number().required('Price is required'),
-    // category: Yup.string().isValid(validCategory).required('Category is required'),
+    category: Yup.string().oneOf(validCategory, 'Choose valid category').required('Category is required'),
 });

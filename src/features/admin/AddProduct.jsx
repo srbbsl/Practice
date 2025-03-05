@@ -29,7 +29,7 @@ export const AddProduct = () => {
                     validationSchema={productSchema}
                 >
                     {({ handleChange, handleSubmit, setFieldValue, values, errors, touched }) => (
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <Typography variant="h4" color="blue-gray" className="text-center">
                                     Add Product
@@ -104,7 +104,11 @@ export const AddProduct = () => {
                                         setFieldValue('imageReview', URL.createObjectURL(file));
                                     }}
                                 />
-                                {!errors.image && values.imageReview && <img src={values.imageReview} alt='img' />}
+                                {!errors.image && values.imageReview && <div className='mt-5 mb-5'>
+                                    <img className='w-full h-[200px] object-cover' src={values.imageReview} alt='img' />
+                                    </div>
+                                }
+
                                 {errors.image && touched.image && (
                                     <p className="text-red-600 text-sm mt-1">{errors.image}</p>
                                 )}

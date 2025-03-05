@@ -5,6 +5,10 @@ import { Login } from './features/auth/Login'
 import { Register } from './features/auth/Register'
 import { ProductList } from './features/product/ProductList'
 import { AdminProduct } from './features/admin/AdminProduct'
+import { AddProduct } from './features/admin/AddProduct'
+
+
+
 
 export const App = () => {
 
@@ -28,6 +32,10 @@ export const App = () => {
                 {
                     path: 'admin-product',
                     element: <AdminProduct />
+                },
+                {
+                    path: 'add-product',
+                    element: <AddProduct />
                 },
             ]
         }

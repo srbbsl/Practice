@@ -2,13 +2,17 @@ import { Button, Input, Typography, Card, Select, Option } from '@material-tailw
 import { Formik } from 'formik'
 import { useNavigate } from 'react-router'
 import { productSchema, validCategory } from '../utils/validator';
+import { useAddProductMutation } from '../product/productApi';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 
 
 export const AddProduct = () => {
     
     const nav = useNavigate();
-    
+    const [addProduct, { isLoading }] = useAddProductMutation();
+    const { user } = useSelector((state) => state.userSlice);
 
     return (
         <div className="flex justify-center items-start p-10 h-screen bg-gray-100">
@@ -21,9 +25,26 @@ export const AddProduct = () => {
                         category: '',
                         image: null,
                         imageReview: '',
+                        imagePath: '',
                     }}
                     onSubmit={ async (val) => {
-                        console.log(val);
+                        // console.log(val);
+                        const formData = new FormData();
+                        formData.append('title', val.title);
+                        formData.append('description', val.description);
+                        formData.append('price', val.price);
+                        formData.append('category', val.category);
+                        formData.append('image', val.image);
+                        try {
+                            await addProduct({
+                                body: formData,
+                                token: user.token,
+                            }).unwrap();
+                            toast.success('Product added successfully');
+                            nav(-1);
+                        } catch (err) {
+                            toast.error(err.data?.message);
+                        }
                         
                     }}
                     validationSchema={productSchema}
@@ -101,10 +122,12 @@ export const AddProduct = () => {
                                         const file = e.target.files[0];
                                         // console.log(file)
                                         setFieldValue('image', file);
+                                        setFieldValue('imagePath', file.name);
                                         setFieldValue('imageReview', URL.createObjectURL(file));
                                     }}
                                 />
-                                {!errors.image && values.imageReview && <div className='mt-5 mb-5'>
+                                {['jpg', 'jpeg', 'png', 'svg', 'webp', 'avif'].includes
+                                (values.imagePath.split('.')[1]) && <div className='mt-5 mb-5'>
                                     <img className='w-full h-[200px] object-cover' src={values.imageReview} alt='img' />
                                     </div>
                                 }
@@ -117,7 +140,7 @@ export const AddProduct = () => {
                             
                             {/* Submit Button */}
                             <Button
-                               
+                                loading= {isLoading}
                                 type="submit" 
                                 size="sm" 
                                 fullWidth 

@@ -6,14 +6,38 @@ export const productApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: `${baseUrl}/products` }),
     endpoints: (builder) => ({
 
-       getProducts: builder.query({
-        query: () => ({
-            url: '/',
-            method: 'GET'
-        })
-        }),
+        getProducts: builder.query({
+            query: () => ({
+                url: '/',
+                method: 'GET',
+            }),
+            providesTags: ['Product'],
+            }),
+
+        addProduct: builder.mutation({
+            query: (q) => ({
+                url: '/',
+                body: q.body,
+                headers: {
+                    Authorization: q.token
+                },
+                method: 'POST',
+            }),
+            invalidatesTags: ['Product'],
+            }),
+
+        removeProduct: builder.mutation({
+            query: (q) => ({
+                url: `/${q.id}`,
+                headers: {
+                    Authorization: q.token
+                },
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Product'],
+            }),
     }),
 
 });
 
-export const { useGetProductsQuery } = productApi;
+export const { useGetProductsQuery, useAddProductMutation, useRemoveProductMutation } = productApi;

@@ -4,6 +4,7 @@ import { Avatar, Button, IconButton } from '@material-tailwind/react';
 import { Card, Typography } from "@material-tailwind/react";
 import { base } from '../../app/apiUrls';
 import { useNavigate } from 'react-router';
+import { RemoveDialog } from './RemoveDialog';
 
  
 const TABLE_HEAD = ["Product_image", "Product_name", "Product_price", "Created_at", "Edit", "Remove"];
@@ -92,9 +93,8 @@ export const AdminProduct = () => {
                     </IconButton>
                   </td>
                   <td className={classes}>
-                    <IconButton size='sm' color='red'>
-                      <i className='fas fa-trash' />
-                    </IconButton>
+                    <RemoveDialog id={_id} />
+                    
                   </td>
                 </tr>
               );

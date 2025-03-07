@@ -1,11 +1,12 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { RootLayout } from './features/ui/RootLayout'
 import { Login } from './features/auth/Login'
 import { Register } from './features/auth/Register'
 import { ProductList } from './features/product/ProductList'
 import { AdminProduct } from './features/admin/AdminProduct'
 import { AddProduct } from './features/admin/AddProduct'
+import { ProductEdit } from './features/admin/ProductEdit'
 
 
 
@@ -36,6 +37,10 @@ export const App = () => {
                 {
                     path: 'add-product',
                     element: <AddProduct />
+                },
+                {
+                    path: 'edit-product/:id',
+                    element: <ProductEdit />
                 },
             ]
         }

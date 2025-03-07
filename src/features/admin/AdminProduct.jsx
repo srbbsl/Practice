@@ -14,7 +14,7 @@ const TABLE_HEAD = ["Product_image", "Product_name", "Product_price", "Created_a
 export const AdminProduct = () => {
 
     const {data, isLoading, error} = useGetProductsQuery();
-    // console.log(data);
+    console.log(data);
     const nav = useNavigate();
 
 
@@ -88,8 +88,10 @@ export const AdminProduct = () => {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <IconButton size='sm' color='amber'>
-                      <i className='fas fa-edit' />
+                    <IconButton 
+                      onClick={() => nav(`/edit-product/${_id}`)}
+                      size='sm' color='amber'>
+                        <i className='fas fa-edit' />
                     </IconButton>
                   </td>
                   <td className={classes}>

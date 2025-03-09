@@ -2,25 +2,33 @@ import { Button, Input, Typography, Card, Select, Option } from '@material-tailw
 import { Formik } from 'formik'
 import { productSchema, validCategory } from '../utils/validator';
 import { toast } from 'react-toastify';
+import { base } from '../../app/apiUrls';
+import { useUpdateProductMutation } from '../product/productApi';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+
+
 
 
 
 
 export const ProductEditForm = ({ product }) => {
-    
-
+    // console.log(product)
+    const [updateProduct, { isLoading }] = useUpdateProductMutation();
+    const { user } = useSelector((state) => state.userSlice);
+    const nav = useNavigate();
 
     return (
         <div className="flex justify-center items-start p-10 h-screen bg-gray-100">
             <Card className="p-6 w-full max-w-md shadow-lg rounded-lg bg-white">
                 <Formik
                     initialValues={{
-                        title: '',
-                        description: '',
-                        price: '',
-                        category: '',
+                        title: product.title,
+                        description: product.description,
+                        price: product.price,
+                        category: product.category,
                         image: null,
-                        imageReview: '',
+                        imageReview: product.image,
                         imagePath: '',
                     }}
                     onSubmit={ async (val) => {
@@ -32,8 +40,24 @@ export const ProductEditForm = ({ product }) => {
                         formData.append('category', val.category);
                         formData.append('image', val.image);
                         try {
-                            
+                           if(val.image === null){
+                            await updateProduct({
+                                body: formData,
+                                id: product._id,
+                                token: user.token,
+                            }).unwrap();
+                           } else {
+                            formData.append('image', val.image);
+                            await updateProduct({
+                                body: formData,
+                                id: product._id,
+                                token: user.token,
+                            }).unwrap();
+                           } 
+                           toast.success('Product updated successfully');
+                           nav(-1);
                         } catch (err) {
+                            console.log(err)
                             toast.error(err.data?.message);
                         }
                         
@@ -44,7 +68,7 @@ export const ProductEditForm = ({ product }) => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <Typography variant="h4" color="blue-gray" className="text-center">
-                                    Add Product
+                                    Edit Product
                                 </Typography>
                               
                             </div>
@@ -91,7 +115,8 @@ export const ProductEditForm = ({ product }) => {
 
                             <div>
                                 <Select
-                                    label='Choose Category' 
+                                    label='Choose a Category' 
+                                    value={values.category}
                                     onChange={(e) => setFieldValue('category', e)}>
                                         {validCategory.map((cat) => <Option key={cat} value={cat}>{cat}</Option>)}
                                         
@@ -117,21 +142,22 @@ export const ProductEditForm = ({ product }) => {
                                         setFieldValue('imageReview', URL.createObjectURL(file));
                                     }}
                                 />
-                                {['jpg', 'jpeg', 'png', 'svg', 'webp', 'avif'].includes
-                                (values.imagePath.split('.')[1]) && <div className='mt-5 mb-5'>
-                                    <img className='w-full h-[200px] object-cover' src={values.imageReview} alt='img' />
-                                    </div>
-                                }
+
+                                {/* <h1>{errors.image}</h1>
+                                <h1>{`${values.image}`}</h1> */}
+                                {/* {values.imageReview && <div className='mt-5 mb-5'>
+                                    <img className='w-full h-[200px] object-cover' src={`${base}/${values.imageReview}`} alt='img' />
+                                </div>}
 
                                 {errors.image && touched.image && (
                                     <p className="text-red-600 text-sm mt-1">{errors.image}</p>
-                                )}
+                                )} */}
                             </div>
 
                             
                             {/* Submit Button */}
                             <Button
-                                // loading= {isLoading}
+                                loading= {isLoading}
                                 type="submit" 
                                 size="sm" 
                                 fullWidth 

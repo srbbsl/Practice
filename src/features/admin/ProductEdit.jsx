@@ -6,8 +6,8 @@ import { ProductEditForm } from './ProductEditForm';
 export const ProductEdit = () => {
     const {id} = useParams();
     const {data, isLoading, error} = useGetProductQuery(id);
-        console.log("Product ID:", id);
-        console.log("Fetched Data:", data);
+        // console.log("Product ID:", id);
+        // console.log("Fetched Data:", data);
     if(isLoading){
         return <h1>Loading...</h1>
     }

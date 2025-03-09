@@ -22,8 +22,8 @@ export const productSchema = () => Yup.object({
     description: Yup.string().required('Description is required'),
     price: Yup.number().required('Price is required'),
     category: Yup.string().oneOf(validCategory, 'Choose valid category').required('Category is required'),
-    image: Yup.mixed().test((val) => {
-        // console.log(val);
-        return val && validImageType.includes(val?.type);
-    }).required('Image is required'),
+    // image: Yup.mixed().test((val) => {
+    //     // console.log(val);
+    //     return val && validImageType.includes(val?.type);
+    // }).required('Image is required'),
 });

@@ -1,10 +1,11 @@
 import { Button, Input, Typography, Card, Select, Option } from '@material-tailwind/react'
 import { Formik } from 'formik'
 import { useNavigate } from 'react-router'
-import { productSchema, validCategory } from '../utils/validator';
+import { productSchema, validCategory, validImageType } from '../utils/validator';
 import { useAddProductMutation } from '../product/productApi';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 
 
@@ -13,6 +14,8 @@ export const AddProduct = () => {
     const nav = useNavigate();
     const [addProduct, { isLoading }] = useAddProductMutation();
     const { user } = useSelector((state) => state.userSlice);
+    const [imageError, setImageError] = useState('Invalid Image Type');
+    const [imageReview, setImageReview] = useState(null);
 
     return (
         <div className="flex justify-center items-start p-10 h-screen bg-gray-100">
@@ -24,11 +27,11 @@ export const AddProduct = () => {
                         price: '',
                         category: '',
                         image: null,
-                        imageReview: '',
-                        imagePath: '',
+                        
                     }}
                     onSubmit={ async (val) => {
                         // console.log(val);
+                        if (imageError) return;
                         const formData = new FormData();
                         formData.append('title', val.title);
                         formData.append('description', val.description);
@@ -49,7 +52,7 @@ export const AddProduct = () => {
                     }}
                     validationSchema={productSchema}
                 >
-                    {({ handleChange, handleSubmit, setFieldValue, values, errors, touched }) => (
+                    {({ handleChange, handleSubmit, setFieldValue, setFieldError, values, errors, touched }) => (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <Typography variant="h4" color="blue-gray" className="text-center">
@@ -122,18 +125,27 @@ export const AddProduct = () => {
                                         const file = e.target.files[0];
                                         // console.log(file)
                                         setFieldValue('image', file);
-                                        setFieldValue('imagePath', file.name);
-                                        setFieldValue('imageReview', URL.createObjectURL(file));
-                                    }}
+                                        
+                                        if (validImageType.includes(file?.type)) {
+                                            setImageError(null);
+                                            setImageReview(URL.createObjectURL(file));
+                                        } else {
+                                            setImageError('Invalid Image Type');
+                                            setImageReview(null);
+                                        }
+                                        
+                                    }}  
                                 />
-                                {['jpg', 'jpeg', 'png', 'svg', 'webp', 'avif'].includes
-                                (values.imagePath.split('.')[1]) && <div className='mt-5 mb-5'>
-                                    <img className='w-full h-[200px] object-cover' src={values.imageReview} alt='img' />
-                                    </div>
-                                }
+                                    
 
-                                {errors.image && touched.image && (
-                                    <p className="text-red-600 text-sm mt-1">{errors.image}</p>
+                                {imageError && touched.image && (
+                                    <p className="text-red-600 text-sm mt-1">{imageError}</p>
+                                )}
+
+                                {!imageError && imageReview && (
+                                    <div>
+                                        <img className='w-full h-[150px] object-cover' src={imageReview} alt='img' />
+                                    </div>
                                 )}
                             </div>
 

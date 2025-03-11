@@ -16,11 +16,12 @@ import { useState } from 'react';
 export const ProductEditForm = ({ product }) => {
     // console.log(product)
     const [updateProduct, { isLoading }] = useUpdateProductMutation();
-    const { user } = useSelector((state) => state.userSlice);
-    const nav = useNavigate();
     const [imageError, setImageError] = useState(null);
     const [imageReview, setImageReview] = useState(product.image);
-    console.log(imageError)
+    // console.log(imageError)
+
+    const { user } = useSelector((state) => state.userSlice);
+    const nav = useNavigate();
 
     return (
         <div className="flex justify-center items-start p-10 h-screen bg-gray-100">
@@ -41,7 +42,7 @@ export const ProductEditForm = ({ product }) => {
                         formData.append('description', val.description);
                         formData.append('price', val.price);
                         formData.append('category', val.category);
-                        formData.append('image', val.image);
+                        
                         try {
                            if(val.image === null){
                             await updateProduct({
@@ -60,7 +61,7 @@ export const ProductEditForm = ({ product }) => {
                            toast.success('Product updated successfully');
                            nav(-1);
                         } catch (err) {
-                            console.log(err)
+                            // console.log(err)
                             toast.error(err.data?.message);
                         }
                         

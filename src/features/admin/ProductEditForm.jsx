@@ -1,11 +1,12 @@
 import { Button, Input, Typography, Card, Select, Option } from '@material-tailwind/react'
 import { Formik } from 'formik'
-import { productSchema, validCategory } from '../utils/validator';
+import { productSchema, validCategory, validImageType } from '../utils/validator';
 import { toast } from 'react-toastify';
 import { base } from '../../app/apiUrls';
 import { useUpdateProductMutation } from '../product/productApi';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 
 
@@ -15,6 +16,10 @@ import { useNavigate } from 'react-router';
 export const ProductEditForm = ({ product }) => {
     // console.log(product)
     const [updateProduct, { isLoading }] = useUpdateProductMutation();
+    const [imageError, setImageError] = useState(null);
+    const [imageReview, setImageReview] = useState(product.image);
+    // console.log(imageError)
+
     const { user } = useSelector((state) => state.userSlice);
     const nav = useNavigate();
 
@@ -28,17 +33,16 @@ export const ProductEditForm = ({ product }) => {
                         price: product.price,
                         category: product.category,
                         image: null,
-                        imageReview: product.image,
-                        imagePath: '',
                     }}
                     onSubmit={ async (val) => {
                         // console.log(val);
+                        if (imageError) return;
                         const formData = new FormData();
                         formData.append('title', val.title);
                         formData.append('description', val.description);
                         formData.append('price', val.price);
                         formData.append('category', val.category);
-                        formData.append('image', val.image);
+                        
                         try {
                            if(val.image === null){
                             await updateProduct({
@@ -57,7 +61,7 @@ export const ProductEditForm = ({ product }) => {
                            toast.success('Product updated successfully');
                            nav(-1);
                         } catch (err) {
-                            console.log(err)
+                            // console.log(err)
                             toast.error(err.data?.message);
                         }
                         
@@ -138,21 +142,33 @@ export const ProductEditForm = ({ product }) => {
                                         const file = e.target.files[0];
                                         // console.log(file)
                                         setFieldValue('image', file);
-                                        setFieldValue('imagePath', file.name);
-                                        setFieldValue('imageReview', URL.createObjectURL(file));
-                                    }}
+                                        
+                                        if (validImageType.includes(file?.type)) {
+                                            setImageError(null);
+                                            setImageReview(URL.createObjectURL(file));
+                                        } else {
+                                            setImageError('Invalid Image Type');
+                                            setImageReview(null);
+                                        }
+                                        
+                                    }}  
                                 />
+                                    
+                                 {/* <h1>{imageError}</h1>                */}
+                                {imageError && touched.image && (
+                                    <p className="text-red-600 text-sm mt-1">{imageError}</p>
+                                )}
 
-                                {/* <h1>{errors.image}</h1>
-                                <h1>{`${values.image}`}</h1> */}
-                                {/* {values.imageReview && <div className='mt-5 mb-5'>
-                                    <img className='w-full h-[200px] object-cover' src={`${base}/${values.imageReview}`} alt='img' />
-                                </div>}
-
-                                {errors.image && touched.image && (
-                                    <p className="text-red-600 text-sm mt-1">{errors.image}</p>
-                                )} */}
-                            </div>
+                                {!imageError && values.image ? (
+                                    <div>
+                                        <img className='w-full h-[150px] object-cover' src={imageReview} alt='img' />
+                                    </div>
+                                ) : !imageError && imageReview && (
+                                    <div>
+                                        <img className='w-full h-[150px] object-cover' src={`${base}/${imageReview}`} alt='img' />
+                                    </div>
+                                )}
+                            </div>                            
 
                             
                             {/* Submit Button */}

@@ -10,7 +10,7 @@ export const ProductList = () => {
   if(error) return <h1>{error.data?.message}</h1>
 
   return (
-    <div className='p-5 grid grid-cols-3 gap-4'>
+    <div className='p-5 grid grid-cols-4 gap-4'>
       {data && data.map((product) => {
         return <ProductCard key={product._id} product={product} />
       })}

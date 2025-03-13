@@ -7,8 +7,12 @@ import {
     Button,
   } from "@material-tailwind/react";
 import { base } from "../../app/apiUrls";
+import { useNavigate } from "react-router";
    
   export function ProductCard({product}) {
+
+    const nav = useNavigate();
+
     return (
       <Card className="">
         <CardHeader shadow={false} floated={false} className="h-56">
@@ -37,6 +41,7 @@ import { base } from "../../app/apiUrls";
         </CardBody>
         <CardFooter className="pt-0">
           <Button
+            onClick={() => nav(`/product-detail/${product._id}`)}
             ripple={false}
             fullWidth={true}
             className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"

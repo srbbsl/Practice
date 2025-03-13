@@ -7,6 +7,7 @@ import { ProductList } from './features/product/ProductList'
 import { AdminProduct } from './features/admin/AdminProduct'
 import { AddProduct } from './features/admin/AddProduct'
 import { ProductEdit } from './features/admin/ProductEdit'
+import { ProductDetail } from './features/product/ProductDetail'
 
 
 
@@ -29,6 +30,10 @@ export const App = () => {
                 {
                     path: 'register',
                     element: <Register />
+                },
+                {
+                    path: 'product-detail/:id',
+                    element: <ProductDetail />
                 },
                 {
                     path: 'admin-product',

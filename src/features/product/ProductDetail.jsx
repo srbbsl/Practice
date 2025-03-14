@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useGetProductQuery } from './productApi';
 import { base } from '../../app/apiUrls';
 import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
@@ -40,8 +40,10 @@ export function CartTable({ product }) {
   const { carts } = useSelector((state) => state.cartSlice);
   const cart = carts.find((cart) => cart._id === product._id)
   const dispatch = useDispatch();
+  const nav = useNavigate();
   const handleAdd = () => {
       dispatch(setCart({...product, qty}));
+      nav('/cart-page');
   }
   const [qty, setQty] = useState(cart?.qty ?? 1);
   

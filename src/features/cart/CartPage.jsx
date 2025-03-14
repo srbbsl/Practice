@@ -1,47 +1,24 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Card, Typography } from "@material-tailwind/react";
+import { base } from '../../app/apiUrls';
  
-const TABLE_HEAD = ["Name", "Job", "Employed", ""];
+const TABLE_HEAD = ["Item", "Price", "Quantity", "Total"];
  
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-    job: "Manager",
-    date: "23/04/18",
-  },
-  {
-    name: "Alexa Liras",
-    job: "Developer",
-    date: "23/04/18",
-  },
-  {
-    name: "Laurent Perrier",
-    job: "Executive",
-    date: "19/09/17",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-];
 
 export const CartPage = () => {
 
-    const carts = useSelector((state) => state.cartSlice);
+    const { carts } = useSelector((state) => state.cartSlice);
+    console.log(carts)
+
+    const totalAmount = () => carts.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   return (
-    <div>
+    <div className='p-5 mr-5'>
 
         {carts.length === 0 ? <div className='text-center text-xl font-bold'>No product added</div>:
 
-        <div>
+        <div >
             <Card className="h-full w-full overflow-scroll">
                 <table className="w-full min-w-max table-auto text-left">
                     <thead>
@@ -63,19 +40,28 @@ export const CartPage = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {TABLE_ROWS.map(({ name, job, date }, index) => {
-                        const isLast = index === TABLE_ROWS.length - 1;
+                    {carts.map(({ price, qty, image, title }, index) => {
+                        const isLast = index === carts.length - 1;
                         const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
             
                         return (
-                        <tr key={name}>
+                        <tr key={index}>
+                            <td className={classes}>
+                                <div className='flex gap-3 items-center'>
+                                    <div>
+                                        <img className='h-[90px] w-[90px] object-cover' src={`${base}${image}`} alt='' />
+                                    </div>
+                                
+                                    <p>{title}</p>
+                                </div>
+                            </td>
                             <td className={classes}>
                             <Typography
                                 variant="small"
                                 color="blue-gray"
                                 className="font-normal"
                             >
-                                {name}
+                               Rs. {price}
                             </Typography>
                             </td>
                             <td className={classes}>
@@ -84,28 +70,11 @@ export const CartPage = () => {
                                 color="blue-gray"
                                 className="font-normal"
                             >
-                                {job}
+                               {qty}
                             </Typography>
                             </td>
                             <td className={classes}>
-                            <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                            >
-                                {date}
-                            </Typography>
-                            </td>
-                            <td className={classes}>
-                            <Typography
-                                as="a"
-                                href="#"
-                                variant="small"
-                                color="blue-gray"
-                                className="font-medium"
-                            >
-                                Edit
-                            </Typography>
+                       
                             </td>
                         </tr>
                         );

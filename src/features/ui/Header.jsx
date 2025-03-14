@@ -21,6 +21,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { removeUserFromLocal } from "../auth/userSlice";
+import { removeCart } from "../cart/cartSlice";
  
 
 const userMenuItems = [
@@ -93,9 +94,13 @@ function ProfileMenu({user}) {
                 switch (label) {
                   case 'Sign Out':
                     dispatch(removeUserFromLocal());
+                    dispatch(removeCart());
                     break;
                   case 'Product':
                     nav('/admin-product');
+                    break;
+                  case 'Carts':
+                    nav('/cart-page');
                     break;
                 }
                 closeMenu();

@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 import { useGetProductQuery } from './productApi';
 import { base } from '../../app/apiUrls';
 import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCart } from '../cart/cartSlice';
 
 export const ProductDetail = () => {
@@ -36,24 +36,43 @@ export const ProductDetail = () => {
  
 export function CartTable({ product }) {
 
+  const { user } = useSelector((state) => state.userSlice);
+  const { carts } = useSelector((state) => state.cartSlice);
+  const cart = carts.find((cart) => cart._id === product._id)
   const dispatch = useDispatch();
   const handleAdd = () => {
       dispatch(setCart({...product, qty}));
   }
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(cart?.qty ?? 1);
   
 
   return (
     <Card className="mt-6 flex items-center gap-5 w-[200px] h-[150px]">
       <Typography className='text-black text-lg font-bold'>Product Add</Typography>
       <div className='flex gap-4'>
-        <IconButton disabled = {qty === 1} onClick={() => setQty(qty - 1)} size='sm'><i className='fas fa-minus' /></IconButton>
+        <IconButton 
+          disabled = {qty === 1} 
+          onClick={() => setQty(qty - 1)} 
+          size='sm'>
+            <i className='fas fa-minus' />
+        </IconButton>
+
         <p>{qty}</p>
-        <IconButton onClick={() => setQty(qty + 1)} size='sm'><i className='fas fa-plus' /></IconButton>
+
+        <IconButton 
+          onClick={() => setQty(qty + 1)} 
+          size='sm'>
+            <i className='fas fa-plus' />
+        </IconButton>
       </div>
 
       <div>
-        <Button onClick={handleAdd} size='sm'>Add to cart</Button>
+        <Button
+          disabled={!user || user?.role === 'admin'} 
+          onClick={handleAdd} 
+          size='sm'>
+            Add to cart
+        </Button>
       </div>
       
       

@@ -8,6 +8,7 @@ import { AdminProduct } from './features/admin/AdminProduct'
 import { AddProduct } from './features/admin/AddProduct'
 import { ProductEdit } from './features/admin/ProductEdit'
 import { ProductDetail } from './features/product/ProductDetail'
+import { CartPage } from './features/cart/CartPage'
 
 
 
@@ -46,6 +47,10 @@ export const App = () => {
                 {
                     path: 'edit-product/:id',
                     element: <ProductEdit />
+                },
+                {
+                    path: 'cart-page',
+                    element: <CartPage />
                 },
             ]
         }

@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Card, Typography } from "@material-tailwind/react";
+import { Button, Card, Typography } from "@material-tailwind/react";
 import { base } from '../../app/apiUrls';
+import { QtyComponent } from './QtyComponent';
  
 const TABLE_HEAD = ["Item", "Price", "Quantity", "Total"];
  
@@ -11,7 +12,7 @@ export const CartPage = () => {
     const { carts } = useSelector((state) => state.cartSlice);
     console.log(carts)
 
-    const totalAmount = () => carts.reduce((acc, item) => acc + item.price * item.qty, 0);
+    const totalAmount = carts.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   return (
     <div className='p-5 mr-5'>
@@ -40,7 +41,7 @@ export const CartPage = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {carts.map(({ price, qty, image, title }, index) => {
+                    {carts.map((cart , index) => {
                         const isLast = index === carts.length - 1;
                         const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
             
@@ -49,10 +50,10 @@ export const CartPage = () => {
                             <td className={classes}>
                                 <div className='flex gap-3 items-center'>
                                     <div>
-                                        <img className='h-[90px] w-[90px] object-cover' src={`${base}${image}`} alt='' />
+                                        <img className='h-[90px] w-[90px] object-cover' src={`${base}${cart.image}`} alt='' />
                                     </div>
                                 
-                                    <p>{title}</p>
+                                    <p>{cart.title}</p>
                                 </div>
                             </td>
                             <td className={classes}>
@@ -61,20 +62,16 @@ export const CartPage = () => {
                                 color="blue-gray"
                                 className="font-normal"
                             >
-                               Rs. {price}
+                               Rs. {cart.price}
                             </Typography>
                             </td>
                             <td className={classes}>
-                            <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                            >
-                               {qty}
-                            </Typography>
+                            
+                               <QtyComponent cart={cart}/>
+                           
                             </td>
                             <td className={classes}>
-                       
+                                {`Rs.${cart.price * cart.qty}`}
                             </td>
                         </tr>
                         );
@@ -82,8 +79,13 @@ export const CartPage = () => {
                     </tbody>
                 </table>
             </Card>
+            {carts.length > 0 && <div className='flex justify-end mt-5 text-xl font-bold'>Total Amount: Rs. {totalAmount}</div>}
+            <div className='flex justify-end mt-4'>
+                <Button size='sm'>Place Order</Button>
+            </div>
         </div>
         }
+        
     </div>
   )
 };

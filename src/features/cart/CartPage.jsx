@@ -1,18 +1,40 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { Button, Card, Typography } from "@material-tailwind/react";
+import { useDispatch, useSelector } from 'react-redux'
+import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
 import { base } from '../../app/apiUrls';
 import { QtyComponent } from './QtyComponent';
+import { removeCart, singleRemoveCart } from './cartSlice';
+import { useCreateOrderMutation } from '../order/orderApi';
+import { toast } from 'react-toastify';
  
 const TABLE_HEAD = ["Item", "Price", "Quantity", "Total"];
  
 
 export const CartPage = () => {
 
+    const [addOrder, {isLoading}] = useCreateOrderMutation();
     const { carts } = useSelector((state) => state.cartSlice);
-    console.log(carts)
-
+    const { user } = useSelector((state) => state.userSlice);
+    // console.log(carts)
+    const dispatch = useDispatch();
     const totalAmount = carts.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+    const handleOrder = async () => {
+        try {
+            await addOrder({
+                token: user.token,
+                totalAmount,
+                products: carts.map((cart) => ({
+                    productId: cart._id,
+                    quantity: cart.qty,
+                }))
+            }).unwrap();
+            dispatch(removeCart());
+            toast.success('Order placed successfully');
+        } catch (err) {
+            toast.error(err.data?.message);
+        }
+    }
 
   return (
     <div className='p-5 mr-5'>
@@ -70,18 +92,36 @@ export const CartPage = () => {
                                <QtyComponent cart={cart}/>
                            
                             </td>
-                            <td className={classes}>
-                                {`Rs.${cart.price * cart.qty}`}
-                            </td>
+
+                            <td>
+                                 <div className='flex gap-2 items-center'>
+                                    <p>
+                                        {`Rs.${cart.price * cart.qty}`}
+                                    </p>
+                                    <IconButton
+                                        onClick={() => dispatch(singleRemoveCart(index))}
+                                        variant='outlined'
+                                        className='w-4 h-4 rounded-full'>
+                                        <i className='fas fa-times fa-xs' />
+                                    </IconButton>
+                                </div>
+                            </td>                            
                         </tr>
                         );
                     })}
                     </tbody>
                 </table>
             </Card>
+            
             {carts.length > 0 && <div className='flex justify-end mt-5 text-xl font-bold'>Total Amount: Rs. {totalAmount}</div>}
+            
             <div className='flex justify-end mt-4'>
-                <Button size='sm'>Place Order</Button>
+                <Button 
+                    onClick={handleOrder}
+                    loading={isLoading}
+                    size='sm'>
+                        Place Order
+                </Button>
             </div>
         </div>
         }

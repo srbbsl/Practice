@@ -14,20 +14,20 @@ export const QtyComponent = ({ cart }) => {
     }
 
   return (
-    <div className='flex gap-4'>
+    <div className='flex gap-4 items-center'>
         <IconButton 
           disabled = {cart.qty === 1} 
           onClick={() => handleChange(false)} 
-          size='sm'>
-            <i className='fas fa-minus' />
+          className='w-6 h-6'>
+            <i className='fas fa-minus fa-sm' />
         </IconButton>
 
-        <p>{cart.qty}</p>
+        <p className='text-[13px]'>{cart.qty}</p>
 
         <IconButton 
           onClick={() => handleChange(true)} 
-          size='sm'>
-            <i className='fas fa-plus' />
+          className='w-6 h-6'>
+            <i className='fas fa-plus fa-sm' />
         </IconButton>
     </div>
   )

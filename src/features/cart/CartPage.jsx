@@ -23,11 +23,14 @@ export const CartPage = () => {
         try {
             await addOrder({
                 token: user.token,
-                totalAmount,
-                products: carts.map((cart) => ({
+                body: {
+                    totalAmount,
+                    products: carts.map((cart) => ({
                     productId: cart._id,
-                    quantity: cart.qty,
-                }))
+                    qty: cart.qty,
+                    }))
+                }
+                
             }).unwrap();
             dispatch(removeCart());
             toast.success('Order placed successfully');

@@ -17,7 +17,7 @@ export const orderApi = createApi({
 
         createOrder: builder.mutation({
             query: (q) => ({
-                url: `/`,
+                url: '/',
                 body: q.body,
                 headers: {
                     Authorization: q.token

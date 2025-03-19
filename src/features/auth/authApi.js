@@ -6,6 +6,29 @@ export const authApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: `${baseUrl}/users` }),
     endpoints: (builder) => ({
 
+        getUser: builder.query({
+            query: (q) => ({
+                url: `/${q.id}`,
+                headers: {
+                    Authorization: q.token,
+                },
+                method: 'GET'
+            }),
+            providesTags: ['User'],
+        }),
+
+        updateUser: builder.mutation({
+            query: (q) => ({
+                url: `/${q.id}`,
+                body: q.body,
+                headers: {
+                    Authorization: q.token,
+                },
+                method: 'PATCH'
+            }),
+            invalidatesTags: ['User'],
+        }),
+
         loginUser: builder.mutation({
             query: (q) => ({
                 url: '/login',
@@ -24,4 +47,9 @@ export const authApi = createApi({
     }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation } = authApi;
+export const { 
+    useLoginUserMutation, 
+    useRegisterUserMutation,
+    useGetUserQuery,
+    useUpdateUserMutation, 
+} = authApi;

@@ -20,7 +20,7 @@ root.render(
       <App />
       <ToastContainer 
             autoClose={2000}
-            position='bottom-right'
+            position='top-right'
             pauseOnFocusLoss={false}
             pauseOnHover={false}
       />

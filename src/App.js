@@ -10,6 +10,7 @@ import { ProductEdit } from './features/admin/ProductEdit'
 import { ProductDetail } from './features/product/ProductDetail'
 import { CartPage } from './features/cart/CartPage'
 import { Profile } from './features/profile/Profile'
+import { OrderDetail } from './features/order/OrderDetail'
 
 
 
@@ -56,6 +57,10 @@ export const App = () => {
                 {
                     path: 'cart-page',
                     element: <CartPage />
+                },
+                {
+                    path: 'order/:id',
+                    element: <OrderDetail />
                 },
             ]
         }

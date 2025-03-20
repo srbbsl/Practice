@@ -102,6 +102,9 @@ function ProfileMenu({user}) {
                   case 'Carts':
                     nav('/cart-page');
                     break;
+                  case 'My Profile':
+                    nav('/user-profile');
+                    break;
                 }
                 closeMenu();
               }}

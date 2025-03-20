@@ -1,7 +1,11 @@
 import React from 'react'
+import { AllOrder } from './AllOrder'
+import { UserOrder } from './UserOrder'
 
-export const OrderList = () => {
+export const OrderList = ({ user }) => {
   return (
-    <div></div>
+    <div className='col-span-2'>
+      {user.role === 'admin' ? <AllOrder user={user} /> : <UserOrder user={user} />}
+    </div>
   )
 }

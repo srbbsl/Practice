@@ -21,7 +21,7 @@ export const ProfileForm = ({ user }) => {
 
   return (
     <div className="">
-            <Card className="p-6 w-full max-w-md shadow-lg rounded-lg bg-white">
+            <Card className="p-6 w-full shadow-lg rounded-lg bg-cyan-100">
                 <Formik
                     initialValues={{
                         email: data.email,
@@ -57,6 +57,7 @@ export const ProfileForm = ({ user }) => {
                             
                             <div>
                                 <Input
+                                    
                                     onChange={handleChange}
                                     value={values.username}
                                     label="Username"

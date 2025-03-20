@@ -13,7 +13,7 @@ export const ProfileForm = ({ user }) => {
     const dispatch = useDispatch();
     const { data, isLoading, error } = useGetUserQuery({
         token: user?.token,
-        id: user?.id,
+        id: user?.userId,
     });
 
     if (isLoading) return <h1>Loading...</h1>

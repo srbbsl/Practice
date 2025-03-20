@@ -9,6 +9,7 @@ export const Profile = () => {
   return (
     <div className='p-6 grid grid-cols-3'>
         <ProfileForm user={user} />
+        
     </div>
   )
 }

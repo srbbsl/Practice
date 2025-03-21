@@ -7,7 +7,7 @@ const TABLE_HEAD = ["Order_Id", "Total Amount", "View Order Detail"];
 
 export const AllOrder = ({ user }) => {
     // console.log(user)
-    const  {data, isLoading, error } = useGetOrdersQuery(user.token);
+    const  {data, isLoading, error } = useGetOrdersQuery(user?.token);
     const nav = useNavigate();
     if (isLoading) return <h1>Loading...</h1>
     if (error) return <h1>{error.data?.message}</h1>

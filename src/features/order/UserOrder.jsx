@@ -8,8 +8,8 @@ const TABLE_HEAD = ["Order_Id", "Total Amount", "View Order Detail"];
 export const UserOrder = ({ user }) => {
     // console.log(user)
     const  {data, isLoading, error } = useGetUserOrdersQuery({
-        token: user.token,
-        id: user.userId
+        token: user?.token,
+        id: user?.userId
     });
     const nav = useNavigate();
 

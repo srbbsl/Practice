@@ -12,6 +12,7 @@ import { CartPage } from './features/cart/CartPage'
 import { Profile } from './features/profile/Profile'
 import { OrderDetail } from './features/order/OrderDetail'
 import { AuthRoutes } from './features/ui/AuthRoutes'
+import { AdminRoutes } from './features/ui/AdminRoutes'
 
 
 
@@ -44,29 +45,43 @@ export const App = () => {
                             path: 'user-profile',
                             element: <Profile />
                         },
+                        {
+                            path: 'cart-page',
+                            element: <CartPage />
+                        },
                     ]
                 },
-                
+
                 {
                     path: 'product-detail/:id',
                     element: <ProductDetail />
                 },
+                
+                //admin routes
                 {
-                    path: 'admin-product',
-                    element: <AdminProduct />
+                    element: <AdminRoutes />,
+                    children: [
+                        {
+                            path: 'admin-product',
+                            element: <AdminProduct />
+                        },
+                        {
+                            path: 'add-product',
+                            element: <AddProduct />
+                        },
+                        {
+                            path: 'edit-product/:id',
+                            element: <ProductEdit />
+                        },
+                    ] 
                 },
-                {
-                    path: 'add-product',
-                    element: <AddProduct />
-                },
-                {
-                    path: 'edit-product/:id',
-                    element: <ProductEdit />
-                },
-                {
-                    path: 'cart-page',
-                    element: <CartPage />
-                },
+                
+                
+                
+                // {
+                //     path: 'cart-page',
+                //     element: <CartPage />
+                // },
                 {
                     path: 'order/:id',
                     element: <OrderDetail />

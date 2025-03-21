@@ -7,9 +7,5 @@ export const AuthRoutes = () => {
     const { user } = useSelector((state) => state.userSlice)
     return user ? <Outlet /> : <Navigate to = '/login' />
 
-  return (
-    <div>
 
-    </div>
-  )
 }

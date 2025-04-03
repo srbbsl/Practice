@@ -60,7 +60,7 @@ export const Login = () => {
                   className="focus:border-blue-600"
                 />
                 <IconButton variant='text' className='!absolute right-1'>
-                  <i className='fas fa-lock' />
+                  <i className={show ? 'fa fa-unlock' : 'fa fa-lock'} onClick={() => setShow(!show)} />
                 </IconButton>
               </div>
               <Button loading={isLoading} className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white" type="submit">

@@ -4,6 +4,7 @@ import './index.css';
 import { App } from './App';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -17,6 +18,11 @@ root.render(
 
    <Provider store={store}>
        <App />
+       <ToastContainer 
+            position='top-right'
+            pauseOnHover={false}
+            autoClose={1000}
+       />
    </Provider>
         
          

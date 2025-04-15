@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router"
 import { RouterProvider } from "react-router-dom"
-import { RootLayout } from "./features/ui/RootLayout"
-import { Login } from "./features/auth/Login"
+import { RootLayout } from "./RootLayout"
+import { Practice } from "./Practice"
+
 
 
 export const App = () => {
@@ -12,7 +13,7 @@ export const App = () => {
       children: [
         {
           index: true,
-          element: <Login />
+          element: <Practice />
         }
       ]
     }

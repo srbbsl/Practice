@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router"
 import { RouterProvider } from "react-router-dom"
-import { RootLayout } from "./RootLayout"
-import { Practice } from "./Practice"
+import { RootLayout } from "./Components/RootLayout"
+import { Practice } from "./Components/Header"
 
 
 
@@ -12,8 +12,7 @@ export const App = () => {
       element: < RootLayout />,
       children: [
         {
-          index: true,
-          element: <Practice />
+          
         }
       ]
     }

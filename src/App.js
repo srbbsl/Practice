@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router"
 import { RouterProvider } from "react-router-dom"
 import { RootLayout } from "./Components/RootLayout"
-import { Practice } from "./Components/Header"
+import { AddForm } from "./pages/AddForm"
+import { Home } from "./pages/Home"
 
 
 
@@ -12,8 +13,17 @@ export const App = () => {
       element: < RootLayout />,
       children: [
         {
-          
-        }
+          index: true,
+          element: <Home />
+        },
+        {
+          path: 'home',
+          element: <Home />
+        },
+        {
+          path: 'add-form',
+          element: <AddForm />
+        },
       ]
     }
   ])

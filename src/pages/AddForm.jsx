@@ -52,6 +52,7 @@ export const AddForm = () => {
           <form onSubmit={handleSubmit} className='space-y-5'>
 
             <div className='space-y-2'>
+            <Typography variant='h6'>Title</Typography>
               <Input
                 onChange={handleChange}
                 value={values.title}

@@ -9,6 +9,20 @@ export const Home = () => {
     // const blogged = blogs.map((blog) => blog.country)
     // console.log(blogged)
 
+    {/*const posts = [
+      {
+        id: 1,
+        title: 'hello',
+      },
+      {
+        id: 2,
+        titile: 'namaste',
+      },
+    ]
+
+    const result = posts.map((post) => post.id === 1 ? {id: 1, title: 'tero'} : post)
+    console.log(result)*/}
+
     
   return (
     <div className='p-4 grid grid-cols-4 gap-3'>

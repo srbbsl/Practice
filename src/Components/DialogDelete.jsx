@@ -37,7 +37,7 @@ export const DialogDelete = ({index}) => {
                         color='green'
                         onClick={() => {
                             dispatch(removeBlog(index));
-                            // handleOpen();
+                            handleOpen();
                         }}
                         className="mr-1"
                     >

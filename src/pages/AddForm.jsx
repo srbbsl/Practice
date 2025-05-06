@@ -37,7 +37,7 @@ export const AddForm = () => {
         }}
 
         onSubmit={(val) => {
-            // console.log(val)
+            console.log(val)
             toast.success('Successfully Added');
             dispatch(addBlog({...val, id: nanoid()}));
             nav(-1);

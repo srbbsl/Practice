@@ -4,9 +4,8 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import * as Yup from 'yup';
-import { addBlog } from '../redux/blogSlice';
+import { editBlog } from '../redux/blogSlice';
 import { toast } from 'react-toastify';
-import { nanoid } from '@reduxjs/toolkit';
 
 
 
@@ -45,8 +44,8 @@ export const EditForm = () => {
 
         onSubmit={(val) => {
             console.log(val)
-            toast.success('Successfully Added');
-            dispatch(addBlog({...val, id: nanoid()}));
+            toast.success('Successfully updated');
+            dispatch(editBlog({...val, id: blog.id}));
             nav(-1);
         }}
 
@@ -75,12 +74,14 @@ export const EditForm = () => {
                 <Radio
                   onChange={handleChange}
                   color='red'
+                  checked={values.location.includes('indoor')}
                   label='Indoor'
                   value={'indoor'}
                   name='location' />
                 <Radio
                   onChange={handleChange}
                   color='green'
+                  checked={values.location.includes('outdoor')}
                   label='Outdoor'
                   value={'outdoor'}
                   name='location'
@@ -96,12 +97,14 @@ export const EditForm = () => {
                 <Checkbox
                   onChange={handleChange}
                   color='red'
+                  checked={values.genres.includes('horror')}
                   label='Horror'
                   value={'horror'}
                   name='genres' />
                 <Checkbox
                   onChange={handleChange}
                   color='amber'
+                  checked={values.genres.includes('comedy')}
                   label='Comedy'
                   value={'comedy'}
                   name='genres' />
@@ -118,7 +121,9 @@ export const EditForm = () => {
 
               <Select
                 onChange={(e) => setFieldValue('country', e)}
-                label='select country'>
+                label='select country'
+                value={values.country}
+                >
                 <Option value='Nepal'>Nepal</Option>
                 <Option value='USA'>USA</Option>
                 <Option value='UK'>UK</Option>
